@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.tw.entity.Book;
+import com.tw.entity.BookPk;
 import com.tw.repo.BookRepo;
 
 @Service
@@ -38,15 +39,23 @@ public class BookService {
 	}
 	
 	public Book updateBook(Book b) {
-		Book bk = bookRepo.findById(b.getBookId()).get();
+		BookPk bpk = b.getPk();
+		
+		Book bk = bookRepo.findById(bpk).get();
 		bk.setAutherName(b.getAutherName());
 		bk.setBookPrice(b.getBookPrice());
+		bpk.setBookId(b.getPk().getBookId());
+		bpk.setBookName(b.getPk().getBookName());
 		bookRepo.save(bk);
 		return bk;
 	}
 	
-	public boolean deleteBook(int id) {
-		bookRepo.deleteById(id);
+	public Book getBookById(Long b) {
+		return bookRepo.getBookById(b);
+	}
+	
+	public boolean deleteBook(Long id) {
+		bookRepo.deleteBookById(id);
 		return true;
 	}
 	

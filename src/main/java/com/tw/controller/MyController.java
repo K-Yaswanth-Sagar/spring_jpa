@@ -42,13 +42,19 @@ public class MyController {
 		return bs.getBooksByPriceSorting();
 	}
 	
+	@GetMapping("/getById-{id}")
+	public Book getBook(@PathVariable Long id) {
+		return bs.getBookById(id);
+	}
+	
 	@PutMapping("/updateBook")
 	public Book updateEmployee(@RequestBody Book b) {
 		return bs.updateBook(b);
 	}
 	
 	@DeleteMapping("/deleteById-{id}")
-	public void deleteById(@PathVariable int id) {
+	public void deleteById(@PathVariable Long id) {
+		
 		bs.deleteBook(id);
 	}
 	
