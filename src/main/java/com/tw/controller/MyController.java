@@ -31,6 +31,17 @@ public class MyController {
 		return bs.getAllBooks();
 	}
 	
+	
+	@GetMapping("/{pageNo}")
+	public List<Book> getbooks(@PathVariable int pageNo){
+		return bs.getBooks(pageNo, 2);
+	}
+	
+	@GetMapping("/getBooksByPriceSorting")
+	public List<Book> getBooksByPriceSorting(){
+		return bs.getBooksByPriceSorting();
+	}
+	
 	@PutMapping("/updateBook")
 	public Book updateEmployee(@RequestBody Book b) {
 		return bs.updateBook(b);
