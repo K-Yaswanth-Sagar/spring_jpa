@@ -7,9 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.tw.entity.AutherDetails;
 import com.tw.entity.Book;
 import com.tw.entity.BookPk;
+import com.tw.repo.AutherRepo;
 import com.tw.repo.BookRepo;
 
 @Service
@@ -17,6 +20,9 @@ public class BookService {
 
 	@Autowired
 	private BookRepo bookRepo;
+	
+	@Autowired
+	private AutherRepo autherRepo;
 	
 	
 	public List<Book> getAllBooks(){
@@ -34,8 +40,14 @@ public class BookService {
 		return bookRepo.findAll(sort);
 	}
 	
-	public void saveBook(Book b) {
-		bookRepo.save(b);
+	@Transactional
+	public void saveBook(Book b, AutherDetails ad) {
+		Book saveBook = bookRepo.save(b);
+		
+		ad.setName(saveBook.getAutherName());
+		ad.setBookId(saveBook.getPk().getBookId());
+		
+		autherRepo.save(ad);
 	}
 	
 	public Book updateBook(Book b) {

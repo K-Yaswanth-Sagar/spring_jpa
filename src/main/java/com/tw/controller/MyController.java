@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tw.entity.Book;
+import com.tw.entity.Request;
 import com.tw.service.BookService;
 
 
@@ -21,9 +22,9 @@ public class MyController {
 	private BookService bs;
 
 	@PostMapping("/saveBook")
-	public void saveEmploye(@RequestBody Book b) {
+	public void saveEmploye(@RequestBody Request request) {
 		
-		bs.saveBook(b);
+		bs.saveBook(request.getBook(), request.getAutherDetails());
 	}
 	
 	@GetMapping("/getAllBooks")
